@@ -17,6 +17,7 @@ package test
 import (
 	"io/ioutil"
 	"path/filepath"
+	"runtime"
 	"testing"
 
 	"github.com/adamdecaf/cert-manage/pkg/cmd"
@@ -34,7 +35,11 @@ func TestIntegraton__genWhitelist(t *testing.T) {
 	output := filepath.Join(dir, "whitelist.json")
 
 	// generate whitelist
-	err = cmd.GenerateWhitelist(output, "", "../testdata/file-with-urls")
+	if runtime.GOOS == "windows" {
+		err = cmd.GenerateWhitelist(output, "", "..\testdata\file-with-urls")
+	} else {
+		err = cmd.GenerateWhitelist(output, "", "../testdata/file-with-urls")
+	}
 	if err != nil {
 		t.Fatal(err)
 	}

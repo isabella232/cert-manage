@@ -66,7 +66,7 @@ func CertManage(args ...string) *Cmd {
 	case "linux":
 		return Command(render("../bin/cert-manage-linux-%s"), args...)
 	case "windows":
-		return Command(render("../bin/cert-manage-%s.exe"), args...)
+		return Command(render(`..\bin\cert-manage-%s.exe`), args...)
 	}
 	return nil
 }

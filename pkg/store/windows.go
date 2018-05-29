@@ -82,8 +82,10 @@ func (s windowsStore) GetInfo() *Info {
 }
 
 func (s windowsStore) version() string {
-	out, err := exec.Command("ver").CombinedOutput()
+	// From https://stackoverflow.com/a/42778990
+	out, err := exec.Command("systeminfo", "|", "findstr", "/B", `/C:"OS Version"`).CombinedOutput()
 	if err != nil {
+		fmt.Println(err)
 		return ""
 	}
 	return strings.TrimSpace(string(out))
